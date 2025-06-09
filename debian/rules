@@ -29,8 +29,8 @@ override_dh_auto_install:
 	dh_auto_install --builddirectory=build-qt5 --destdir=debian/tmp-qt5
 	dh_auto_install --builddirectory=build-qt6 --destdir=debian/tmp-qt6
 	mkdir libsoqt520-dev libsoqt620-dev libsoqt-common-dev
-	mkdir -p debian/libsoqt520t64/usr/lib/$(DEB_HOST_MULTIARCH) debian/libsoqt620/usr/lib/$(DEB_HOST_MULTIARCH)
-	cp -r debian/tmp-qt5/usr/lib/*/*.so.* debian/libsoqt520t64/usr/lib/$(DEB_HOST_MULTIARCH)/
+	mkdir -p debian/libsoqt520/usr/lib/$(DEB_HOST_MULTIARCH) debian/libsoqt620/usr/lib/$(DEB_HOST_MULTIARCH)
+	cp -r debian/tmp-qt5/usr/lib/*/*.so.* debian/libsoqt520/usr/lib/$(DEB_HOST_MULTIARCH)/
 	cp -r debian/tmp-qt6/usr/lib/*/*.so.* debian/libsoqt620/usr/lib/$(DEB_HOST_MULTIARCH)/
 
 	# Create necessary directories

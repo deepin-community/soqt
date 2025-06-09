@@ -1,3 +1,9 @@
+soqt (1.6.3+ds1-2deepin1) unstable; urgency=medium
+
+  * revert t64.
+
+ -- lhdjply <lhdjply@126.com>  Mon, 9 Jun 2025 13:36:12 +0800
+
 soqt (1.6.3+ds1-2) unstable; urgency=medium
 
   * [090a658] Reintroduce libsoqt520t64. (Closes: #1101811)
