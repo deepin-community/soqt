@@ -18,10 +18,7 @@ Vcs-Git: https://salsa.debian.org/science-team/soqt.git
 Homepage: https://github.com/coin3d/soqt
 Rules-Requires-Root: no
 
-Package: libsoqt520t64
-Provides: ${t64:Provides}
-Replaces: libsoqt520
-Breaks: libsoqt520 (<< ${source:Version})
+Package: libsoqt520
 Architecture: any
 Section: libs
 Depends: ${misc:Depends},
@@ -39,7 +36,7 @@ Architecture: any
 Section: libdevel
 Depends: libcoin-dev,
          libqt5opengl5-dev,
-         libsoqt520t64 (= ${binary:Version}),
+         libsoqt520 (= ${binary:Version}),
          qtbase5-dev,
          ${misc:Depends},
 	 libsoqt-common-dev (= ${source:Version})
