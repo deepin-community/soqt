@@ -1,0 +1,17 @@
+# SoQt library
+
+It is an old library still operative. Upstream has now two versions. One
+against Qt5 and another against Qt6.
+
+## To import a new version
+
+Upstream manages multiples sources. To import them to the git use:
+
+$ gbp import-orig --pristine-tar --component=sogui --component=data ../soqt_1.6.3+ds1.orig.tar.xz
+
+## Coexistence
+
+libsoqt520-dev and libsoqt620-dev cannot be installed together. They share
+same files but with different contents. The binary libraries can coexists.
+
+lpa 20250130

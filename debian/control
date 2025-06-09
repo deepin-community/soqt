@@ -1,15 +1,115 @@
-Source: template-repository
-Section: unknown
+Source: soqt
+Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
+Uploaders: Leopold Palomo-Avellaneda <leo@alaxarxa.net>,
+           Kurt Kremitzki <kurt@kwk.systems>
+Section: graphics
 Priority: optional
-Maintainer: Tsic404 <liuheng@deepin.org>
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.1.3
-Homepage: https://github.com/deepin-community/template-repository
-#Vcs-Browser: https://salsa.debian.org/debian/deepin-community-template-repository
-#Vcs-Git: https://salsa.debian.org/debian/deepin-community-template-repository.git
+Build-Depends: debhelper-compat (= 12),
+               doxygen,
+               cmake,
+               libcoin-dev,
+               qtbase5-dev,
+               libqt5opengl5-dev,
+	       qt6-base-dev,
+	       libqt6opengl6-dev
+Standards-Version: 4.5.0
+Vcs-Browser: https://salsa.debian.org/science-team/soqt
+Vcs-Git: https://salsa.debian.org/science-team/soqt.git
+Homepage: https://github.com/coin3d/soqt
+Rules-Requires-Root: no
 
-Package: template-repository
+Package: libsoqt520t64
+Provides: ${t64:Provides}
+Replaces: libsoqt520
+Breaks: libsoqt520 (<< ${source:Version})
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Section: libs
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Multi-Arch: same
+Description: Qt5 GUI component toolkit for Inventor - runtime
+ SoQt is a Qt GUI component toolkit library for Coin, based on the
+ API of the InventorXt GUI component toolkit.  SoQt is also compatible
+ with OpenInventor of SGI and TGS.
+ .
+ This library is linked against Qt version 5.
+
+Package: libsoqt520-dev
+Architecture: any
+Section: libdevel
+Depends: libcoin-dev,
+         libqt5opengl5-dev,
+         libsoqt520t64 (= ${binary:Version}),
+         qtbase5-dev,
+         ${misc:Depends},
+	 libsoqt-common-dev (= ${source:Version})
+Conflicts: libsoqt620-dev
+Provides: libsoqt5-dev
+Description: Qt5 GUI component toolkit for Inventor - development
+ SoQt is a Qt GUI component toolkit library for Coin, based on the
+ API of the InventorXt GUI component toolkit.  SoQt is also compatible
+ with OpenInventor of SGI and TGS.
+ .
+ SoQt provides a class-hierarchy of viewer classes that ranges from a
+ simple render canvas (the SoQtRenderArea), providing only the basic
+ synchronization and device input conversion routines between Qt and
+ Coin, up to 3 different full-featured viewer classes
+ (SoQtExaminerViewer, SoQtPlaneViewer and SoQtFlyViewer) with input
+ device handling logic and user interfaces to let the application
+ programmer do Rapid Application Development.
+ .
+ This library is linked against Qt version 5.
+
+Package: libsoqt620
+Architecture: any
+Section: libs
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Multi-Arch: same
+Description: Qt6 GUI component toolkit for Inventor - runtime
+ SoQt is a Qt GUI component toolkit library for Coin, based on the
+ API of the InventorXt GUI component toolkit.  SoQt is also compatible
+ with OpenInventor of SGI and TGS.
+ .
+ This library is linked against Qt version 6.
+
+Package: libsoqt620-dev
+Architecture: any
+Section: libdevel
+Depends: libcoin-dev,
+         libqt6opengl6-dev,
+         libsoqt620 (= ${binary:Version}),
+         qt6-base-dev,
+         ${misc:Depends},
+	 libsoqt-common-dev (= ${source:Version})
+Conflicts: libsoqt520-dev
+Replaces: libsoqt520-dev
+Provides: libsoqt6-dev
+Description: Qt6 GUI component toolkit for Inventor - development
+ SoQt is a Qt GUI component toolkit library for Coin, based on the
+ API of the InventorXt GUI component toolkit.  SoQt is also compatible
+ with OpenInventor of SGI and TGS.
+ .
+ SoQt provides a class-hierarchy of viewer classes that ranges from a
+ simple render canvas (the SoQtRenderArea), providing only the basic
+ synchronization and device input conversion routines between Qt and
+ Coin, up to 3 different full-featured viewer classes
+ (SoQtExaminerViewer, SoQtPlaneViewer and SoQtFlyViewer) with input
+ device handling logic and user interfaces to let the application
+ programmer do Rapid Application Development.
+ .
+ This library is linked against Qt version 6.
+
+Package: libsoqt-common-dev
+Architecture: all
+Depends: libcoin-dev, ${misc:Depends}
+Breaks: libsoqt520-dev (<< 1.6.3+ds1-1~exp1)
+Replaces: libsoqt520-dev (<< 1.6.3+ds1-1~exp1)
+Section: libdevel
+Description: Qt5/Qt6 GUI component toolkit for Inventor - development
+ SoQt is a Qt GUI component toolkit library for Coin, based on the
+ API of the InventorXt GUI component toolkit.  SoQt is also compatible
+ with OpenInventor of SGI and TGS.
+ .
+ This package provides the common files for both versions of SoQt:
+ one built against Qt5 and another against Qt6.

@@ -1,0 +1,97 @@
+New in SoQt v1.6.3 (2024-09-04):
+* new:
+  - Added support for building modern styled documentation
+
+New in SoQt v1.6.2 (2023-12-30):
+* bugfixes:
+  - Link build artifacts to Coin v4.0.2
+  - Update CI workflow and build matrix
+  - Fixed numerous typos found with codespell
+
+New in SoQt v1.6.1 (2023-11-18):
+* new:
+  - Version control system has been changed from Mercurial to Git
+  - Home of Coin3d organization has been changed from https://bitbucket.org/Coin3D
+    to https://github.com/coin3d due to Bitbucket ending Mercurial support
+  - Added CI for macOS, Windows, and Ubuntu per GitHub actions to repository
+  - Added support for Qt6
+
+* bugfixes:
+  - cpack.d was made optional and disabled by default (add -DSOQT_USE_CPACK=ON
+    to the cmake commandline to enable it)
+  - Fixed numerous documentation issues
+  - Added SOQT_BUILD_TESTS option to control building of test code (default: ON)
+  - Fix hidpi black screen issue
+  - Fix broken SoQt.pc.cmake.in. Added -lSoQt
+  - Fix wrong glwidget geometry size for Qt4
+  - Add handling for background color RGBA
+
+New in SoQt v1.6.0 (2019-12-23):
+* new:
+  - Kongsberg Oil & Gas Technologies AS ended SoQt as a commercial product
+    and re-licensed it under the BSD 3-clause license as a service to the
+    user community.
+  - The build system has been migrated from GNU Autotools to CMake
+  - Added support for Qt5
+  - Added support for high DPI displays in Qt5
+  - Support for BitBucket and AppVeyor as continuous integration service providers
+
+* bugfixes:
+  - Numerous documentation fixes
+  - Added resource information to Win DLL
+
+New in SoQt v1.5.0 (2010-03-02):
+* new:
+  - Builds against Qt3 and Qt4 without dependency on Qt3Support for Qt4
+  - Added support for reading texture images using Qt
+  - Added multisample support
+  - Added getVersionToolkitString() providing the version of the
+    underlying GUI toolkit version in use
+
+* bugfixes:
+  - Corrected spacing, margin and width fixes for application buttons
+  - Workaround for Qt versions with no QThread-support
+  - Improved Qt4 detection
+  - Various compile and robustness fixes
+  - Plugged memory leaks
+  - Many bug fixes
+
+* build system:
+  - Updated autotools to autoconf-2.65, automake-1.8.3, libtool-1.5.26
+  - Changed default location for generated HTML documentation
+  - Added pkg-config description and detection support
+
+* other:
+  - Removal of Spaceball support
+
+New in SoQt v1.4.1 (2006-10-29):
+* critical viewer/camera-related bugfix
+
+New in SoQt v1.4.0 (2006-08-29):
+* full support for Qt 4 on all platforms, including Mac OS 10.4 "Tiger"
+* worked around a Qt bug causing the maximum framerate with Qt-4 on
+  Windows to be ~ 20fps
+* many bug fixes
+
+New in SoQt v1.3.0 (2005-09-22):
+* install SoGuiMaterialEditor.h
+* SoQtGLWidget::setStealFocus()/isStealFocus()
+* support for Mac OS 10.4 "Tiger"
+* complete Visual Studio project file setup under build/
+* misc minor fixes
+
+New in SoQt v1.2.0 (2004-08-27):
+* New classes SoQtColorEditor, SoQtMaterialEditor
+* support Coin's SORTED_LAYERS_BLEND transparency mode
+* --enable-compact configure option, as with Coin
+* misc bugfixes
+* many Mac OS X improvements
+
+New in SoQt v1.0.2 (2003-03-07):
+* bugfixes
+* MS Windows installer with MS Developer Studio files
+
+New in SoQt v1.0.1 (2002-08-13):
+* configure fixes to improve Qt and QGL detection, particularly on MSWin
+* Mac OS X build fix
+* fixes for Debian packaging

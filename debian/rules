@@ -1,4 +1,62 @@
 #!/usr/bin/make -f
 
+DEB_BUILD_OPTIONS += nocheck
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+bindnow
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+        NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+        MAKEFLAGS += -j$(NUMJOBS)
+endif
+
 %:
-	dh $@
+	dh $@ --buildsystem=cmake --without autoreconf
+
+override_dh_auto_configure:
+	rm -rf src/Inventor/Qt/common
+	ln -sfn $(CURDIR)/sogui src/Inventor/Qt/common
+	mkdir -p build-qt5 build-qt6
+	dh_auto_configure --builddirectory=build-qt5 -- -DCMAKE_INSTALL_PREFIX=/usr -DSOQT_USE_QT6=OFF -DSOQT_BUILD_TESTS=ON
+	dh_auto_configure --builddirectory=build-qt6 -- -DCMAKE_INSTALL_PREFIX=/usr -DSOQT_USE_QT6=ON -DSOQT_BUILD_TESTS=ON
+
+override_dh_auto_build:
+	dh_auto_build --builddirectory=build-qt5
+	dh_auto_build --builddirectory=build-qt6
+
+override_dh_auto_install:
+	# Install into separate staging directories
+	dh_auto_install --builddirectory=build-qt5 --destdir=debian/tmp-qt5
+	dh_auto_install --builddirectory=build-qt6 --destdir=debian/tmp-qt6
+	mkdir libsoqt520-dev libsoqt620-dev libsoqt-common-dev
+	mkdir -p debian/libsoqt520t64/usr/lib/$(DEB_HOST_MULTIARCH) debian/libsoqt620/usr/lib/$(DEB_HOST_MULTIARCH)
+	cp -r debian/tmp-qt5/usr/lib/*/*.so.* debian/libsoqt520t64/usr/lib/$(DEB_HOST_MULTIARCH)/
+	cp -r debian/tmp-qt6/usr/lib/*/*.so.* debian/libsoqt620/usr/lib/$(DEB_HOST_MULTIARCH)/
+
+	# Create necessary directories
+	mkdir -p debian/libsoqt520-dev/usr/include/Inventor/Qt debian/libsoqt620-dev/usr/include/Inventor/Qt
+	mkdir -p debian/libsoqt-common-dev/usr debian/libsoqt-common-dev/usr/share/
+	mkdir -p debian/libsoqt520-dev/usr/lib debian/libsoqt620-dev/usr/lib
+
+	# Common files
+	cp -r debian/tmp-qt5/usr/include debian/libsoqt-common-dev/usr
+	cp -r debian/tmp-qt5/usr/share/* debian/libsoqt-common-dev/usr/share/
+	
+	# delete different file
+	rm debian/libsoqt-common-dev/usr/include/Inventor/Qt/SoQtBasic.h
+
+	# copy especific files
+	cp debian/tmp-qt5/usr/include/Inventor/Qt/SoQtBasic.h debian/libsoqt520-dev/usr/include/Inventor/Qt
+	cp debian/tmp-qt6/usr/include/Inventor/Qt/SoQtBasic.h debian/libsoqt620-dev/usr/include/Inventor/Qt
+	# Qt5
+	mkdir -p debian/libsoqt520-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
+	cp -r debian/tmp-qt5/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/* debian/libsoqt520-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
+	cp -r debian/tmp-qt5/usr/lib/$(DEB_HOST_MULTIARCH)/cmake debian/libsoqt520-dev/usr/lib/$(DEB_HOST_MULTIARCH)
+	# Qt6
+	mkdir -p debian/libsoqt620-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
+	cp -r debian/tmp-qt6/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/* debian/libsoqt620-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
+	cp -r debian/tmp-qt6/usr/lib/$(DEB_HOST_MULTIARCH)/cmake debian/libsoqt620-dev/usr/lib/$(DEB_HOST_MULTIARCH)
+
+override_dh_link:
+	dh_link usr/lib/$(DEB_HOST_MULTIARCH)/libSoQt.so.520 usr/lib/$(DEB_HOST_MULTIARCH)/libSoQt.so -p libsoqt520-dev
+	dh_link usr/lib/$(DEB_HOST_MULTIARCH)/libSoQt.so.620 usr/lib/$(DEB_HOST_MULTIARCH)/libSoQt.so -p libsoqt620-dev

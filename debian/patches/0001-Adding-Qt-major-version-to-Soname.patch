@@ -1,0 +1,22 @@
+From: Leopold Palomo-Avellaneda <leo@alaxarxa.net>
+Date: Wed, 29 Jan 2025 19:29:08 +0100
+Subject: Adding Qt major version to Soname
+
+---
+ src/CMakeLists.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 8d24ec9..afff080 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -103,7 +103,8 @@ endif()
+ if(WIN32 AND NOT MINGW)
+   set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${SO${GUI}_SO_VERSION})
+ else()
+-  set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${SO${GUI}_SO_VERSION}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}" SOVERSION ${SO${GUI}_SO_VERSION})
++  set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${SO${GUI}_SO_VERSION}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}" SOVERSION ${QT_VERSION_MAJOR}${SO${GUI}_SO_VERSION})
++  message(STATUS "Setting SOVERSION to ${QT_VERSION_MAJOR}${SO${GUI}_SO_VERSION}")
+ endif()
+ 
+ target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_CONFIG_H SO${GUI}_INTERNAL SO${GUI}_DEBUG=$<CONFIG:Debug>)

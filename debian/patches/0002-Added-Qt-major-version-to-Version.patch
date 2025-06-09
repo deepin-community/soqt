@@ -1,0 +1,21 @@
+From: Leopold Palomo-Avellaneda <leo@alaxarxa.net>
+Date: Wed, 29 Jan 2025 21:00:11 +0100
+Subject: Added suffix the library name
+
+---
+ src/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index afff080..77f5a6e 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -103,7 +103,7 @@ endif()
+ if(WIN32 AND NOT MINGW)
+   set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${SO${GUI}_SO_VERSION})
+ else()
+-  set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${SO${GUI}_SO_VERSION}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}" SOVERSION ${QT_VERSION_MAJOR}${SO${GUI}_SO_VERSION})
++  set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${QT_VERSION_MAJOR}${SO${GUI}_SO_VERSION}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}" SOVERSION ${QT_VERSION_MAJOR}${SO${GUI}_SO_VERSION})
+   message(STATUS "Setting SOVERSION to ${QT_VERSION_MAJOR}${SO${GUI}_SO_VERSION}")
+ endif()
+ 

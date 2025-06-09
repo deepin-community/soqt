@@ -1,0 +1,5 @@
+Tests: test-qt5
+Depends: libsoqt520-dev, build-essential, xvfb, xauth, libxcursor1
+
+Tests: test-qt6
+Depends: libsoqt620-dev, build-essential, xvfb, xauth, libxcursor1
