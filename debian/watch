@@ -1,0 +1,10 @@
+version=4
+
+opts="filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/soqt-$1.tar.gz/, \
+dversionmangle=auto,repacksuffix=+ds1" \
+  https://github.com/coin3d/soqt/releases .*/v?(\d+\.\d+\.\d+)\.tar\.gz
+opts=component=data,repack \
+  https://github.com/coin3d/soanydata/tags .*/soanydata-(\d.*).*(?<!_pre)\.(?:tgz|tbz2|txz|tar\.(?:gz|bz2|xz))
+opts=component=sogui,repack \
+ https://github.com/coin3d/sogui/tags .*/soqt-(\d.*).*(?<!_pre)\.(?:tgz|tbz2|txz|tar\.(?:gz|bz2|xz))
+
